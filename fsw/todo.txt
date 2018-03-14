@@ -1,0 +1,2 @@
+stick_erase.cpp---GameManager::getStickStacksÀ‘•
+ƒRƒƒ“ƒg’Ç‰Á‚µ‚Ä‚¢‚­
