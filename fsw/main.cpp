@@ -37,6 +37,7 @@ int main() {
 		INIT_DESC id;
 		id.hWnd = AppBase::hMainWindow;
 		id.Size = { (acs::uint) ss.x, (acs::uint)ss.y };
+		id.useWarpDevice = false;
 		ThrowIfFalse(CreateDraw(&id, &draw));
 		ThrowIfFalse(draw->GetScreenTarget(&screent));
 	}
