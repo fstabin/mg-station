@@ -202,7 +202,9 @@ int game_main::StickErase::main(const game_util::COMMON_RESOURCE& resoure) {
 	auto& timeKeeper = *resoure.keeper;
 	auto& inputmng = *resoure.inputMng;
 	auto ScreenW = resoure.screenW, ScreenH = resoure.screenH;
+	bool isFirstScene;
 	
+	//--描画リソース定義　始--
 	acs::SIACS<IRenderResource>rresourceStick;
 	if(CreateIRenderResourceP(draw, resoure.ioImg, L"resource\\stick.png", &rresourceStick) == false)throw(std::exception("Resource create err"));
 
@@ -220,13 +222,16 @@ int game_main::StickErase::main(const game_util::COMMON_RESOURCE& resoure) {
 	IGamePlayer* pContraller;
 	User user_controller;
 	pContraller = &user_controller;
+	//--描画リソース定義　終--
+	game_util::DrawSyncGuarder dsg(draw);//描画リソースの定義の後に置く
 BEGIN:
+	//--ゲーム開始時の初期化　始--
 	manager.init();
 	size_t queryTimer = 0;
-
 	spriteGameEnd[0].flag = false;
-
 	timeKeeper.reset();
+	isFirstScene = true;
+	//--ゲーム開始時の初期化　終--
 
 	while (timeKeeper.keepTime()) {
 
@@ -237,6 +242,7 @@ BEGIN:
 			ThrowIfFalse(draw->ResizeScreenTarget({ (acs::uint)screenSize.x ,(acs::uint)screenSize.y }));
 		}
 		
+		//--ゲームのメイン処理　始--
 		//入力処理
 		{
 			inputmng.updateInputState();
@@ -276,6 +282,12 @@ BEGIN:
 				break;
 			}
 		}
+		//--ゲームのメイン処理　終--
+
+		//--描画関連処理　始--
+		//表示
+		if (isFirstScene) isFirstScene = false;
+		else draw->Present(0);
 
 		//描画データ更新
 		{
@@ -295,8 +307,7 @@ BEGIN:
 			line.Draw(drawer);
 			spriteGameEnd.Draw(drawer);
 		}
-
-		draw->Present(0);
+		//--描画関連処理　終--
 	}
 	return 0;
 }

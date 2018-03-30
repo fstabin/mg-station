@@ -19,10 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{813F9715-C58E-4E3E-80CF-6562E83CF634}</ProjectGuid>
+    <ProjectGuid>{17043938-C26F-41D7-B211-6C89B8563190}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>fsw</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>mg-station</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -156,13 +157,21 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
     <Text Include="todo.txt" />
+    <Text Include="入力ルール等.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h" />
     <ClInclude Include="block_blake.h" />
     <ClInclude Include="button.h" />
+    <ClInclude Include="draw_sync_helper.h" />
     <ClInclude Include="fps_keeper.h" />
     <ClInclude Include="fsw.h" />
+    <ClInclude Include="game-template.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="game_common.h" />
     <ClInclude Include="input_manager.h" />
     <ClInclude Include="main_menu.h" />
@@ -174,6 +183,12 @@
   <ItemGroup>
     <ClCompile Include="AppBase.cpp" />
     <ClCompile Include="block_brake.cpp" />
+    <ClCompile Include="game-template.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_menu.cpp" />
     <ClCompile Include="stdafx.cpp">

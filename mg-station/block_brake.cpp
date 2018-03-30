@@ -37,7 +37,9 @@ int game_main::BlockBrake::main(const game_util::COMMON_RESOURCE& resoure) {
 	auto& timeKeeper = *resoure.keeper;
 	auto& inputmng = *resoure.inputMng;
 	auto ScreenW = resoure.screenW, ScreenH = resoure.screenH;
+	bool isFirstScene;
 
+	//--リソース定義　始--
 	acs::SIACS<IRenderResource> res;
 	COLOR color[] = { { 255,255,255,255 } };
 	CreateIRenderResourceM(draw, 1, 1, color, &res);
@@ -47,8 +49,14 @@ int game_main::BlockBrake::main(const game_util::COMMON_RESOURCE& resoure) {
 	float sball[balls];//ボールの移動の速さ
 	sprite::SimpleSprite block(draw, blocks, camera2D, res);
 	std::vector<bool> ballRemoveReserved(blocks);
+	//--リソース定義　終--
+	game_util::DrawSyncGuarder dsg(draw);//リソースの定義の後に置く
 
 BEGIN:
+
+	//--ゲーム開始時の初期化　始--
+	timeKeeper.reset();
+	isFirstScene = true;
 
 	bool Started = false;
 
@@ -69,8 +77,7 @@ BEGIN:
 			ballRemoveReserved[blockx * j + i] = false;
 		}
 	}
-
-	timeKeeper.reset();
+	//--ゲーム開始時の初期化　終--
 
 	while (timeKeeper.keepTime()) {
 
@@ -81,6 +88,7 @@ BEGIN:
 			ThrowIfFalse(draw->ResizeScreenTarget({ (acs::uint)screenSize.x ,(acs::uint)screenSize.y }));
 		}
 
+		//--ゲームのメイン処理　始--
 		{
 			auto& stat_bar = bar[0];
 			float speedoffs = 1;
@@ -224,7 +232,12 @@ BEGIN:
 			}
 
 		}
+		//--ゲームのメイン処理　終--
 
+		//--描画関連処理　始--
+		//表示
+		if (isFirstScene) isFirstScene = false;
+		else draw->Present(0);
 		//描画データ更新
 		{
 			Updater updater(draw);
@@ -243,8 +256,7 @@ BEGIN:
 			ball.Draw(drawer);
 			bar.Draw(drawer);
 		}
-
-		draw->Present(0);
+		//--描画関連処理　終--
 	}
 	return 0;
 }

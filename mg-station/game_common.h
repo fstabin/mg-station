@@ -4,6 +4,7 @@
 #include "fps_keeper.h"
 #include "input_manager.h"
 #include "button.h"
+#include "draw_sync_helper.h"
 namespace game_util {
 	struct COMMON_RESOURCE {
 		int screenW, screenH;//Šî–{î•ñ

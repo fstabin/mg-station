@@ -19,7 +19,9 @@ std::pair<int, game_util::GameCommand> game_main::MainMenu::main(const game_util
 	auto& timeKeeper = *resoure.keeper;
 	auto& inputmng = *resoure.inputMng;
 	auto ScreenW = resoure.screenW, ScreenH = resoure.screenH;
-
+	bool isFirstScene;
+	
+	//描画リソース定義　始
 	acs::SIACS<IRenderResource> imageRResource;
 	if(false == CreateIRenderResourceP(draw, ioimg, L"resource\\game_icon.png", &imageRResource))throw (std::exception("create IRenderResource err"));
 	sprite::SimpleSprite sprite(draw, gIconAmount + 1, camera2D, imageRResource);
@@ -32,7 +34,10 @@ std::pair<int, game_util::GameCommand> game_main::MainMenu::main(const game_util
 	sprite[1].pos = { 64,0,0 };
 	sprite[2].pos = sprite[0].pos;
 	sprite[2].texstate = { 3 * 0.25f, 0.5f, 0.25f, 0.5f };
-
+	//描画リソース定義　終
+	game_util::DrawSyncGuarder dsg(draw);//描画リソースの定義の後に置く
+	
+	//その他初期化　始
 	game_util::ButtonManager btmng;
 	for (size_t i = 0; i < gIconAmount; i++)
 	{
@@ -41,10 +46,14 @@ std::pair<int, game_util::GameCommand> game_main::MainMenu::main(const game_util
 
 	size_t curIndex = 0;
 	bool cursorMoved = false;//カーソルが動いたかどうかのフラグ
+							
+	//その他初期化　終
 
 BEGIN:
-
+	//ゲーム開始時の初期化　始
 	timeKeeper.reset();
+	isFirstScene = true;
+	//ゲーム開始時の初期化　終
 
 	while (timeKeeper.keepTime()) {
 
@@ -54,7 +63,8 @@ BEGIN:
 		if (AppBase::ScreenCheckResized()) {
 			if (false == draw->ResizeScreenTarget({ (acs::uint)screenSize.x ,(acs::uint)screenSize.y }))throw(std::exception("screen resize err"));
 		}
-
+		
+		//--ゲームのメイン処理　始--
 		{
 			inputmng.updateInputState();
 			if (inputmng.getKeyHoldingtick(VK_LEFT) == 1) {
@@ -105,6 +115,12 @@ BEGIN:
 			cursorMoved = false;
 			sprite[gIconAmount].pos = sprite[curIndex].pos;
 		}
+		//--ゲームのメイン処理　終--
+
+		//--描画関連処理　始--
+		//表示
+		if (isFirstScene) isFirstScene = false;
+		else draw->Present(0);
 
 		//描画データ更新
 		{
@@ -120,8 +136,7 @@ BEGIN:
 			context->ClearTarget(0, backGnd);
 			sprite.Draw(context);
 		}
-
-		draw->Present(0);
+		//--描画関連処理　終--
 	}
 	return std::pair<int, game_util::GameCommand>(0, game_util::GameCommand::EndApp);
 }

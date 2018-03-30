@@ -19,7 +19,6 @@
 #include "Stick_erase.h"
 
 #define ThrowIfFalse(x) if(!x)throw(#x);
-//#define BALL_NO_FALL
 
 int ScreenW = 960, ScreenH = 640;
 
