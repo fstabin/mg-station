@@ -24,6 +24,7 @@ namespace game_util {
 		GotoMainMenu,
 		StartBlockBrake,
 		StartStickErase,
+		StartShooting,
 		EndGame,
 		EndApp,
 	};

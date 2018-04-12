@@ -28,6 +28,9 @@
     <Filter Include="ソース ファイル\game_main">
       <UniqueIdentifier>{c8c33315-c84d-4ebd-bdcb-b7bf16ab4ae3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\game_main\shooting">
+      <UniqueIdentifier>{e91dc125-bd72-410e-9e7d-9b9410d6b041}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -81,6 +84,9 @@
     <ClInclude Include="draw_sync_helper.h">
       <Filter>ヘッダー ファイル\game_util</Filter>
     </ClInclude>
+    <ClInclude Include="shooting.h">
+      <Filter>ヘッダー ファイル\game_main\shooting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -102,6 +108,9 @@
       <Filter>ソース ファイル\game_main</Filter>
     </ClCompile>
     <ClCompile Include="stick_erase.cpp">
+      <Filter>ソース ファイル\game_main</Filter>
+    </ClCompile>
+    <ClCompile Include="shooting.cpp">
       <Filter>ソース ファイル\game_main</Filter>
     </ClCompile>
   </ItemGroup>

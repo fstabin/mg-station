@@ -4,7 +4,7 @@ namespace {
 	using acs::vector::i2d;
 	using acs::vector::f2d;
 	using acs::vector::f3d;
-	size_t gIconAmount = 2;
+	size_t gIconAmount = 3;
 }
 
 std::pair<int, game_util::GameCommand> game_main::MainMenu::main(const game_util::COMMON_RESOURCE &resoure)
@@ -30,10 +30,11 @@ std::pair<int, game_util::GameCommand> game_main::MainMenu::main(const game_util
 		auto& state = sprite[i];
 		state = { true, {0,0,0},{64,64},{0,0,0},{static_cast<float>(i) * 0.25f, 0, 0.25f, 0.5f} };
 	}
-	sprite[0].pos = {-64,0,0};
-	sprite[1].pos = { 64,0,0 };
-	sprite[2].pos = sprite[0].pos;
-	sprite[2].texstate = { 3 * 0.25f, 0.5f, 0.25f, 0.5f };
+	sprite[0].pos = {-128,0,0};
+	sprite[1].pos = { 0,0,0 };
+	sprite[2].pos = { 128,0,0 };
+	sprite[gIconAmount].pos = sprite[0].pos;
+	sprite[gIconAmount].texstate = { 3 * 0.25f, 0.5f, 0.25f, 0.5f };
 	//描画リソース定義　終
 	game_util::DrawSyncGuarder dsg(draw);//描画リソースの定義の後に置く
 	
@@ -68,7 +69,7 @@ BEGIN:
 		{
 			inputmng.updateInputState();
 			if (inputmng.getKeyHoldingtick(VK_LEFT) == 1) {
-				if (curIndex == 0)curIndex = 1;
+				if (curIndex == 0)curIndex = gIconAmount - 1;
 				else --curIndex;
 				cursorMoved = true;
 			}
@@ -89,6 +90,9 @@ BEGIN:
 					break;
 				case 1:
 					return game_util::GameCommand::StartStickErase;
+					break;
+				case 2:
+					return game_util::GameCommand::StartShooting;
 					break;
 				default:
 					return game_util::GameCommand::Invalid;

@@ -17,6 +17,7 @@
 #include "main_menu.h"
 #include "block_blake.h"
 #include "Stick_erase.h"
+#include "shooting.h"
 
 #define ThrowIfFalse(x) if(!x)throw(#x);
 
@@ -106,6 +107,14 @@ int main() {
 			if (result != 0)return result;
 		}
 			break;
+		case GameCommand::StartShooting:
+		{
+			game_main::Shooting game;
+			result = game.main(resource);
+			command = GameCommand::EndGame;
+			if (result != 0)return result;
+		}
+		break;
 		case GameCommand::EndGame:
 			if (AppBase::AppWait(0) == false) {
 				command = GameCommand::EndApp;
